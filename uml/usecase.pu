@@ -1,0 +1,15 @@
+@startuml
+
+title 信長の野望Online 報酬交換期限管理 ユースケース図
+
+actor "ユーザー" as user
+
+usecase "報酬交換期限が次回メンテ前までのキャンペーン一覧を取得する" as getCampaignsUntilNextMaintenance
+usecase "次回メンテ日時を取得する" as getNextMaintenanceDateTime
+usecase "全キャンペーン一覧を取得する" as getAllCampaign
+
+user --> getCampaignsUntilNextMaintenance
+getCampaignsUntilNextMaintenance ..> getNextMaintenanceDateTime : include
+getCampaignsUntilNextMaintenance ..> getAllCampaign : include
+
+@enduml
