@@ -1,0 +1,27 @@
+@startuml
+
+title 信長の野望Online 報酬交換期限管理 クラス図
+
+namespace nol {
+  class MaintenanceDateTimeManager {
+    +DateTime getNextMaintenanceDateTime()
+  }
+
+  class CampaignInfo {
+    +string campaignName
+    +DateTime rewardDueDateTime
+  }
+
+  class CampaignManager {
+    +init(string jsonPaths[])
+    +terminate()
+
+    +CampaignInfo[] getAllCampaign()
+    +CampaignInfo[] getCampaignInRewardDue(DateTime fromDateTime, DateTime toDateTime)
+  }
+}
+
+CampaignManager --> CampaignInfo
+CampaignManager o-- MaintenanceDateTimeManager
+
+@enduml
