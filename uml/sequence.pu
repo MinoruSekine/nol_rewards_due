@@ -1,0 +1,39 @@
+@startuml
+
+autoactivate on
+
+title 信長の野望Online 報酬交換期限管理 シーケンス図
+
+participant CampaignManager
+participant MaintenanceDateTimeManager
+box System
+participant DateTime
+end box
+
+[-> CampaignManager : getCampaignRewardUntilNextMaintenance()
+  CampaignManager -> DateTime : curentDateTime = getCurrentDateTime()
+  return
+  CampaignManager -> MaintenanceDateTimeManager : toDateTime = getNextMaintenanceDateTime(currentDateTime)
+    alt (currentDateTime.dayOfWeek == maintenanceDayOfWeek)\n && (currentDateTime.time < maintenanceTime)
+      MaintenanceDateTimeManager -> MaintenanceDateTimeManager : nextMaintenanceDateTime.date = currentDateTime.date
+      return
+    else
+      MaintenanceDateTimeManager -> MaintenanceDateTimeManager : nextMaintenanceDateTime.date = next maintenanceDayOfWeek
+      return
+    end
+    MaintenanceDateTimeManager -> MaintenanceDateTimeManager : nextMaintenanceDateTime.time = maintenanceTime
+    return
+  return nextMaintenanceDateTime
+  CampaignManager -> CampaignManager : getCampaignInRewardDue(currentDateTime, toDateTime)
+    CampaignManager -> CampaignManager : allCampaigns[] = getAllCampaign()
+    return
+    loop campaign : allCampaigns
+      opt fromDateTime <= campaign.rewardDueDateTime && campaign.rewardDueDateTime < toDateTime
+        CampaignManager -> CampaignManager : campaigns.push_back(campaign)
+        return
+      end opt
+    end loop
+  return
+return
+
+@enduml

@@ -18,10 +18,20 @@ namespace nol {
 
     +CampaignInfo[] getAllCampaign()
     +CampaignInfo[] getCampaignInRewardDue(DateTime fromDateTime, DateTime toDateTime)
+    +CampaignInfo[] getCampaignRewardUntilNextMaintenance()
+  }
+}
+
+namespace system {
+  class DateTime {
+    +DateTime getCurrentDateTime()
   }
 }
 
 CampaignManager --> CampaignInfo
 CampaignManager o-- MaintenanceDateTimeManager
+CampaignManager ---> DateTime
+
+MaintenanceDateTimeManager --> DateTime
 
 @enduml
